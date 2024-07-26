@@ -1,4 +1,4 @@
 <?php
 //Collector
-$this->get('/', '\Application\Collector\Controllers\CollectorController::show');
+$this->get('/', '\Application\LaunchApprover::approve');
 $this->post('/', '\Application\Collector\Controllers\CollectorController::vote');
