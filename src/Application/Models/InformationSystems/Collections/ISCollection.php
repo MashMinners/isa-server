@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Application\Models\InformationSystems;
+namespace Application\Models\InformationSystems\Collections;
+
+use Application\Models\InformationSystems\DTO\IS;
 
 class ISCollection implements \JsonSerializable
 {

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Application\Models\InformationSystems;
+namespace Application\Models\InformationSystems\DTO;
 
 use Engine\DTO\BaseDTO;
 
-class IS extends BaseDTO implements \JsonSerializable
+/**
+ * DTO для передачи связки  ID персонала и связанной с ним информационной системы
+ */
+class IsPersonnelPack extends BaseDTO implements \JsonSerializable
 {
-    protected string|null $informationSystemId;
-    protected string|null $informationSystemName;
-    protected string|null $informationSystemLink;
-    protected int|null $isSecured;
-    protected string|null $informationSystemImage;
+    protected $personnelId;
+    protected $isId;
 
     public function __construct(array|string $data){
         $properties = get_class_vars(self::class);
@@ -30,6 +30,5 @@ class IS extends BaseDTO implements \JsonSerializable
         $properties = get_object_vars($this);
         return $properties;
     }
-
 
 }
