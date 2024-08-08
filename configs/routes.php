@@ -5,4 +5,4 @@ $this->get('/is/personnel/{id}', '\Application\Controllers\ISController::personn
 $this->post('/is/add/system', '\Application\Controllers\ISController::addSystem');
 $this->post('/is/add/personnel', '\Application\Controllers\ISController::addPersonnel');
 //Personnel
-$this->post('/personnel/add', '\Application\Controllers\ISController::addSystem');
+$this->post('/personnel/add', '\Application\Controllers\PersonnelController::create');
