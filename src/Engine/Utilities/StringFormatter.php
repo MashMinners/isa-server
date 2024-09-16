@@ -11,4 +11,8 @@ class StringFormatter
         return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
     }
 
+    public static function wrapInQuotes(string $string) : string {
+        return "'".$string."'";
+    }
+
 }
