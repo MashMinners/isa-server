@@ -13,6 +13,7 @@ class Personnel extends BaseDTO implements \JsonSerializable
     protected string|null $personnelFirstname;
     protected string|null $personnelSecondname;
     protected string|null $personnelPosition;
+    protected string|null $personnelInsuranceIndividualNumber;
 
     public function __construct(array|string $data){
         $properties = get_class_vars(self::class);

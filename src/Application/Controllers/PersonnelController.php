@@ -23,4 +23,13 @@ class PersonnelController
         return $response;
     }
 
+    public function addIS(ServerRequestInterface $request) : ResponseInterface {
+
+    }
+
+    public function delete(ServerRequestInterface $request) : ResponseInterface {
+        $IDs = file_get_contents('php://input');
+        $this->manager->delete($IDs);
+    }
+
 }
