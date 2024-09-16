@@ -18,6 +18,7 @@
         "php-di/php-di": "^7.0",
         "ext-pdo": "*",
         "ramsey/uuid": "^4.7",
-        "tecnickcom/tcpdf": "^6.6"
+        "tecnickcom/tcpdf": "^6.6",
+      "ext-mbstring": "*"
     }
 }
