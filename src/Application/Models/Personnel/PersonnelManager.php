@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Models\Personnel;
 
+use Application\Models\Personnel\Collections\PersonnelCollection;
 use Application\Models\Personnel\DTO\Personnel;
 use Application\Models\Personnel\DTO\PersonnelISA;
 use Engine\Database\IConnector;
@@ -16,6 +17,11 @@ class PersonnelManager
         $this->pdo = $connector::connect();
     }
 
+    /**
+     * Валидация объекта сотрудника на то, что он корректно заполнен и соответсвует требованиям
+     * @param Personnel $personnel
+     * @return bool
+     */
     private function validatePersonnel(Personnel $personnel) : bool {
         if(!preg_match("/^[А-Яа-яЁё]+$/u", $personnel->personnelSurname)){return false;}
         if(!preg_match("/^[А-Яа-яЁё]+$/u", $personnel->personnelFirstname)){return false;}
@@ -24,6 +30,11 @@ class PersonnelManager
         return true;
     }
 
+    /**
+     * Поиск наличия дубликатов в БД по конкретному сотруднику
+     * @param Personnel $personnel
+     * @return bool
+     */
     private function checkPersonnelForDuplicate(Personnel $personnel) : bool {
         $query = ("SELECT personnel_id FROM isa_personnel WHERE personnel_insurance_individual_number = :personnelInsuranceIndividualNumber");
         $stmt = $this->pdo->prepare($query);
@@ -53,11 +64,35 @@ class PersonnelManager
        return $personnelId;
     }
 
-    public function insertPersonnelStack (array $personnel) {
-        //Добавить сразу несколько пользователей
+    /**
+     * Удаление сотрудников из системы
+     * @param string $IDs
+     * @return bool
+     */
+    public function deletePersonnel(string $IDs) : bool {
+        $IDs = json_decode($IDs);
+        $query = ("DELETE FROM isa_personnel WHERE personnel_id IN");
+        $query .= "(";
+        foreach ($IDs->personnelId as $key => $value){
+            $query .= StringFormatter::wrapInQuotes($value)." ,";
+        }
+        $query =  mb_substr($query, 0, -1);
+        $query .= ")";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return true;
     }
 
-    public function insertISA(PersonnelISA $personnelISA){
+    public function insertPersonnelStack (PersonnelCollection $collection) {
+
+    }
+
+    /**
+     * Добавление пользователю информационных систем, с которыми он работает
+     * @param PersonnelISA $personnelISA
+     * @return true
+     */
+    public function addISA(PersonnelISA $personnelISA){
         $query = ("INSERT INTO isa_information_systems_personnel (isp_id, personnel_id, information_system_id)
                 VALUES ");
         foreach ($personnelISA->isaList as $key => $value){
@@ -69,14 +104,25 @@ class PersonnelManager
             $query .= "),";
         }
         $query =  mb_substr($query, 0, -1);
-        //return $query;
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         return true;
     }
 
-    public function delete(array $IDs) : bool {
-
+    public function removeISA(string $IDs) : bool {
+        $IDs = json_decode($IDs);
+        $query = ("DELETE FROM isa_information_systems_personnel WHERE isp_id IN");
+        $query .= "(";
+        foreach ($IDs->ispId as $key => $value){
+            $query .= StringFormatter::wrapInQuotes($value)." ,";
+        }
+        $query =  mb_substr($query, 0, -1);
+        $query .= ")";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return true;
     }
+
+
 
 }

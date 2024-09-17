@@ -24,16 +24,25 @@ class PersonnelController
         return $response;
     }
 
-    public function addIS(ServerRequestInterface $request) : ResponseInterface {
-        $json = file_get_contents('php://input');
-        $result = $this->manager->insertISA(new PersonnelISA($json));
+    public function delete(ServerRequestInterface $request) : ResponseInterface {
+        $IDs = file_get_contents('php://input');
+        $result = $this->manager->deletePersonnel($IDs);
         $response = new JsonResponse($result);
         return $response;
     }
 
-    public function delete(ServerRequestInterface $request) : ResponseInterface {
+    public function addISA(ServerRequestInterface $request) : ResponseInterface {
+        $json = file_get_contents('php://input');
+        $result = $this->manager->addISA(new PersonnelISA($json));
+        $response = new JsonResponse($result);
+        return $response;
+    }
+
+    public function removeISA(ServerRequestInterface $request) : ResponseInterface {
         $IDs = file_get_contents('php://input');
-        $this->manager->delete($IDs);
+        $result = $this->manager->removeISA($IDs);
+        $response = new JsonResponse($result);
+        return $response;
     }
 
 }
