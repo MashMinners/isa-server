@@ -32,7 +32,7 @@ class ISManager
     public function getPersonnelByISId(string $isId){
         $query = ("SELECT ip.personnel_id, ip.personnel_surname, ip.personnel_firstname, ip.personnel_secondname, ip.personnel_position
                    FROM isa_personnel ip
-                   INNER JOIN isa_information_systems_personel iisp ON ip.personnel_id = iisp.personnel_id                   
+                   INNER JOIN isa_information_systems_personnel iisp ON ip.personnel_id = iisp.personnel_id                   
                    WHERE (iisp.information_system_id = :isId)");
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([

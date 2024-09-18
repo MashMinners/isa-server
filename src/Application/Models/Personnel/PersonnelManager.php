@@ -42,6 +42,35 @@ class PersonnelManager
         return $stmt->rowCount()>0 ? true : false;
     }
 
+    public function list(){
+        $query = ("SELECT * FROM isa_personnel");
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getISsByPersonnelId(string $personnelId){
+        /*$query = ("SELECT ip.personnel_id, ip.personnel_surname, ip.personnel_firstname, ip.personnel_secondname, ip.personnel_position
+                   FROM isa_personnel ip
+                   INNER JOIN isa_information_systems_personnel iisp ON ip.personnel_id = iisp.personnel_id
+                   WHERE (iisp.information_system_id = :isId)");*/
+        $query = ("SELECT iss.information_system_id, iss.information_system_name, iss.information_system_link, iss.is_secured, iss.information_system_image, iss.information_system_description
+                   FROM isa_information_systems iss
+                   INNER JOIN isa_information_systems_personnel iisp ON iss.information_system_id = iisp.information_system_id
+                   WHERE iisp.personnel_id = :personnelId");
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'personnelId' => $personnelId
+        ]);
+        $results = $stmt->fetchAll();
+        /*$collection = new IsPersonnelCollection();
+        foreach ($results as $result){
+            $collection->add(new Personnel($result));
+        }
+        return $collection;*/
+        return $results;
+    }
+
     /**
      * Создание 1-го пользователя
      * @param Personnel $personnel

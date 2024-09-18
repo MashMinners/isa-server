@@ -17,6 +17,19 @@ class PersonnelController
 
     }
 
+    public function list(ServerRequestInterface $request) : ResponseInterface {
+        //Выводит список всех сотрудников
+        $list = $this->manager->list();
+        $response = (new JsonResponse($list));
+        return $response;
+    }
+
+    public function ISs(ServerRequestInterface $request) : ResponseInterface {
+        $id = $request->getAttributes()['id'];
+        $collection = $this->manager->getISsByPersonnelId($id);
+        return (new JsonResponse($collection));
+    }
+
     public function create(ServerRequestInterface $request) : ResponseInterface {
         $json = file_get_contents('php://input');
         $personnelId = $this->manager->insertPersonnel(new Personnel($json));
