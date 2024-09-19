@@ -22,7 +22,7 @@ class ISController
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function list(ServerRequestInterface $request) : ResponseInterface {
+    public function listIS(ServerRequestInterface $request) : ResponseInterface {
         $collection = $this->manager->list();
         return (new JsonResponse($collection));
     }
@@ -32,24 +32,21 @@ class ISController
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function personnel(ServerRequestInterface $request) : ResponseInterface {
+    public function listPersonnel(ServerRequestInterface $request) : ResponseInterface {
         $id = $request->getAttributes()['id'];
         $collection = $this->manager->getPersonnelByISId($id);
         return (new JsonResponse($collection));
     }
 
-    public function getPersonnelByName(ServerRequestInterface $request) : ResponseInterface {
-        //$data = $request->getQueryParams();//file_get_contents('php://input');
-        $data = file_get_contents('php://input');
-        $collection = $this->ejournal->get(new Search($data));
-        return new JsonResponse($collection);
-    }
-
-    public function addSystem(ServerRequestInterface $request) : ResponseInterface {
+    public function createIS(ServerRequestInterface $request) : ResponseInterface {
         $json = file_get_contents('php://input');
         $isId = $this->manager->insertSystem(new IS($json));
         $response = (new JsonResponse($isId));
         return $response;
+    }
+
+    public function deleteIS(ServerRequestInterface $request) : ResponseInterface {
+
     }
 
     public function addPersonnel(ServerRequestInterface $request) : ResponseInterface {
@@ -57,6 +54,10 @@ class ISController
         $isId = $this->manager->insertPersonnel(new IsPersonnelPack($json));
         $response = (new JsonResponse($isId));
         return $response;
+    }
+
+    public function removePersonnel(ServerRequestInterface $request) : ResponseInterface {
+
     }
 
 

@@ -121,7 +121,7 @@ class PersonnelManager
      * @param PersonnelISA $personnelISA
      * @return true
      */
-    public function addISA(PersonnelISA $personnelISA){
+    /*public function addISA(PersonnelISA $personnelISA){
         $query = ("INSERT INTO isa_information_systems_personnel (isp_id, personnel_id, information_system_id)
                 VALUES ");
         foreach ($personnelISA->isaList as $key => $value){
@@ -150,8 +150,6 @@ class PersonnelManager
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         return true;
-    }
-
-
+    }*/
 
 }

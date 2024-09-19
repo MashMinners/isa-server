@@ -17,19 +17,33 @@ class PersonnelController
 
     }
 
+    /**
+     * Показать всех сотрудников
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
     public function list(ServerRequestInterface $request) : ResponseInterface {
-        //Выводит список всех сотрудников
         $list = $this->manager->list();
         $response = (new JsonResponse($list));
         return $response;
     }
 
-    public function ISs(ServerRequestInterface $request) : ResponseInterface {
+    /**
+     * Показать все информационные системы сотрудника
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
+    /*public function listIS (ServerRequestInterface $request) : ResponseInterface {
         $id = $request->getAttributes()['id'];
         $collection = $this->manager->getISsByPersonnelId($id);
         return (new JsonResponse($collection));
-    }
+    }*/
 
+    /**
+     * Создать сотрудника
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
     public function create(ServerRequestInterface $request) : ResponseInterface {
         $json = file_get_contents('php://input');
         $personnelId = $this->manager->insertPersonnel(new Personnel($json));
@@ -37,6 +51,11 @@ class PersonnelController
         return $response;
     }
 
+    /**
+     * Удалить сотрудника
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
     public function delete(ServerRequestInterface $request) : ResponseInterface {
         $IDs = file_get_contents('php://input');
         $result = $this->manager->deletePersonnel($IDs);
@@ -44,18 +63,28 @@ class PersonnelController
         return $response;
     }
 
-    public function addISA(ServerRequestInterface $request) : ResponseInterface {
+    /**
+     * Добавить информационную систему сотруднику
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
+   /* public function addIS(ServerRequestInterface $request) : ResponseInterface {
         $json = file_get_contents('php://input');
         $result = $this->manager->addISA(new PersonnelISA($json));
         $response = new JsonResponse($result);
         return $response;
-    }
+    }*/
 
-    public function removeISA(ServerRequestInterface $request) : ResponseInterface {
+    /**
+     * Убрать информационную систему у сотрудника
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
+    /*public function removeIS(ServerRequestInterface $request) : ResponseInterface {
         $IDs = file_get_contents('php://input');
         $result = $this->manager->removeISA($IDs);
         $response = new JsonResponse($result);
         return $response;
-    }
+    }*/
 
 }
