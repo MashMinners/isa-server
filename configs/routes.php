@@ -12,4 +12,7 @@ $this->delete('/personnel/delete', '\Application\Controllers\PersonnelController
 //$this->post('/personnel/add/systems', '\Application\Controllers\PersonnelController::addISA');
 //$this->post('/personnel/remove/systems', '\Application\Controllers\PersonnelController::removeISA');
 //Credentials
+$this->get('/credentials/get/byIS/{id}', '\Application\Controllers\CredentialsController::getByIS');
+$this->get('/credentials/get/byPersonnel/{id}', '\Application\Controllers\CredentialsController::getByPersonnel');
 $this->post('/credentials/create', '\Application\Controllers\CredentialsController::create');
+$this->delete('/credentials/delete', '\Application\Controllers\CredentialsController::delete');

@@ -15,8 +15,17 @@ class CredentialsController
 
     }
 
-    public function get(ServerRequestInterface $request) : ResponseInterface {
+    public function getByIS(ServerRequestInterface $request) : ResponseInterface {
+        //$data = $request->getQueryParams();//file_get_contents('php://input');
+        $id = $request->getAttributes()['id'];
+        $collection = $this->manager->getByIS($id);
+        return new JsonResponse($collection);
+    }
 
+    public function getByPersonnel(ServerRequestInterface $request) : ResponseInterface {
+        $id = $request->getAttributes()['id'];
+        $collection = $this->manager->getByPersonnel($id);
+        return new JsonResponse($collection);
     }
 
     public function create(ServerRequestInterface $request) : ResponseInterface {
